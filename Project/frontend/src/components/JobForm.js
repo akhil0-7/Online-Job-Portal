@@ -10,15 +10,13 @@ function JobForm({ onJobPosted }) {
   const submitJob = () => {
     if (!title || !desc || !location || !salary) return alert("Fill all fields");
 
-    axios.post("http://127.0.0.1:8000/api/jobs/", {
-      title, description: desc, location, salary
-    })
-    .then(res => {
-      alert("Job posted successfully!");
-      setTitle(""); setDesc(""); setLocation(""); setSalary("");
-      if (onJobPosted) onJobPosted();
-    })
-    .catch(err => console.log(err.response?.data));
+    axios.post("http://127.0.0.1:8000/api/jobs/", { title, description: desc, location, salary })
+      .then(() => {
+        alert("Job posted!");
+        setTitle(""); setDesc(""); setLocation(""); setSalary("");
+        if (onJobPosted) onJobPosted();
+      })
+      .catch(err => console.log(err.response?.data));
   };
 
   return (

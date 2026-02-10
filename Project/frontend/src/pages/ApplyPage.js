@@ -11,7 +11,7 @@ function ApplyPage() {
   const [resume, setResume] = useState(null);
 
   const submitApplication = () => {
-    if (!resume) return alert("Please upload your resume");
+    if (!resume) return alert("Upload resume");
 
     const formData = new FormData();
     formData.append("job", id);
@@ -20,15 +20,12 @@ function ApplyPage() {
     formData.append("resume", resume);
 
     axios.post("http://127.0.0.1:8000/api/applications/", formData)
-      .then(res => {
-        alert("Application submitted successfully!");
-        navigate("/");
-      })
+      .then(() => { alert("Applied!"); navigate("/"); })
       .catch(err => console.log(err.response?.data));
   };
 
   return (
-    <div>
+    <div className="apply-form">
       <h2>Apply for Job</h2>
       <input placeholder="Name" value={name} onChange={e => setName(e.target.value)} /><br/>
       <input placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} /><br/>
