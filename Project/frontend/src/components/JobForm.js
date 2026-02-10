@@ -1,34 +1,28 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-function JobForm() {
+function JobForm({ onJobPosted }) {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [location, setLocation] = useState("");
   const [salary, setSalary] = useState("");
 
   const submitJob = () => {
+    if (!title || !desc || !location || !salary) return alert("Fill all fields");
+
     axios.post("http://127.0.0.1:8000/api/jobs/", {
-      title: title,
-      description: desc,
-      location: location,
-      salary: Number(salary)   // ✅ convert to number
+      title, description: desc, location, salary
     })
     .then(res => {
-      alert("Job Posted Successfully!");
-      setTitle("");
-      setDesc("");
-      setLocation("");
-      setSalary("");
+      alert("Job posted successfully!");
+      setTitle(""); setDesc(""); setLocation(""); setSalary("");
+      if (onJobPosted) onJobPosted();
     })
-    .catch(err => {
-      console.log(err.response.data); // see backend error
-      alert("Error posting job");
-    });
+    .catch(err => console.log(err.response?.data));
   };
 
   return (
-    <div>
+    <div className="job-form">
       <h2>Post Job</h2>
       <input placeholder="Title" value={title} onChange={e => setTitle(e.target.value)} /><br/>
       <textarea placeholder="Description" value={desc} onChange={e => setDesc(e.target.value)} /><br/>

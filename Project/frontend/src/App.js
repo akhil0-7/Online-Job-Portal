@@ -1,15 +1,18 @@
 import React from "react";
-import JobForm from "./JobForm";
-import JobList from "./JobList";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import ApplyPage from "./pages/ApplyPage";
 
 function App() {
   return (
-    <div>
-      <h1>Online Job Portal</h1>
-      <JobForm />
-      <hr />
-      <JobList />
-    </div>
+    <Router>
+      <div className="container">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/apply/:id" element={<ApplyPage />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
